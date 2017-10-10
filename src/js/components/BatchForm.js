@@ -13,13 +13,13 @@ export default class BatchForm extends React.Component {
             <fieldset>
               <legend>Details</legend>
               <div className="form-group">
-                <label for="apiKey" className="col-lg-2 control-label">API Key</label>
+                <label htmlFor="apiKey" className="col-lg-2 control-label">API Key</label>
                 <div className="col-lg-10">
                   <input type="text" className="form-control" id="apiKey" onChange={this.props.onApiChange}/>
                 </div>
               </div>
               <div className="form-group">
-                <label for="amount" className="col-lg-2 control-label">Charge Amount: $</label>
+                <label htmlFor="amount" className="col-lg-2 control-label">Charge Amount: $</label>
                 <div className="col-lg-10">
                   <input type="number" className="form-control" id="amount" value="95.00" onChange={this.props.onAmountChange}/>
                 </div>

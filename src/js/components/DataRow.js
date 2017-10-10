@@ -3,6 +3,9 @@ import React from "react";
 export default class DataRow extends React.Component {
   constructor() {
     super()
+    this.state = {
+      id: 0
+    }
   }
 
   render(){
@@ -12,7 +15,8 @@ export default class DataRow extends React.Component {
       )
     }else{
       const TdComponents = this.props.props.map(data => {
-        return <td>{data}</td>
+        this.state.id+=1;
+        return <td key={this.state.id}>{data}</td>
       })
       return(
         <tr>

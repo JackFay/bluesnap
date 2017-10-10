@@ -62,7 +62,6 @@ export default class Dashboard extends React.Component{
       var serializedXml = new XMLSerializer().serializeToString(xml);
       console.log(serializedXml);
       this.props.dispatch(postTransactions(serializedXml, this.state.apiKey));
-
     }
 
     render(){
@@ -74,7 +73,8 @@ export default class Dashboard extends React.Component{
           headers = csvData.shift();
         }
         const DataRowComponents = csvData.map(csv => {
-          if(csv.length === 16){
+          if(csv.length > 1){
+            console.log("the key is: " + csv[0]);
             return <DataRow key={csv[0]} props={csv} />
           }
         })

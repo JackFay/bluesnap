@@ -7,7 +7,7 @@ import store from "./js/store"
 
 /* Pages */
 import Dashboard from './js/pages/Dashboard';
-
+import TransactionResult from './js/pages/TransactionResult';
 const app = document.getElementById('app');
 
 const Root = () => {
@@ -16,6 +16,7 @@ const Root = () => {
       <BrowserRouter>
         <div>
           <Route exact path="/" component={Dashboard} />
+          <Route path="/transactionresult" component={TransactionResult} />
         </div>
       </BrowserRouter>
     </Provider>
