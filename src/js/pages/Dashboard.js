@@ -13,7 +13,7 @@ import axios from "axios";
 
 @connect((store) => {
   return {
-    csvData: "data"
+    transactions: store.main.transactions,
   };
 })
 export default class Dashboard extends React.Component{
@@ -78,7 +78,7 @@ export default class Dashboard extends React.Component{
             return <DataRow key={csv[0]} props={csv} />
           }
         })
-
+        console.log(this.props.transactions);
         return(
           <div>
             <Nav location = {location} />
@@ -99,9 +99,9 @@ export default class Dashboard extends React.Component{
                   </tbody>
                 </table>
               </div>
-            </div>
-            <div className="container jack-container">
-              {csvUploaded ? <BatchForm onSubmit={this.onSubmit.bind(this)} onAmountChange={this.onAmountChange.bind(this)} onApiChange={this.onApiChange.bind(this)}/> : null}
+              <div className="jack-form">
+                {csvUploaded ? <BatchForm onSubmit={this.onSubmit.bind(this)} onAmountChange={this.onAmountChange.bind(this)} onApiChange={this.onApiChange.bind(this)}/> : null}
+              </div>
             </div>
           </div>
         );
