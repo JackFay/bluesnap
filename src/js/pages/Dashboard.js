@@ -1,0 +1,109 @@
+import React from "react";
+import {connect} from "react-redux";
+import Nav from "../components/Nav";
+import ReactFileReader from 'react-file-reader';
+import {CSVToArray} from '../utils/utils'
+import {generateXML} from '../utils/utils';
+import {StringToXML} from '../utils/utils';
+import {postTransactions} from '../actions/actions';
+import DataRow from '../components/DataRow';
+import TableHeader from '../components/TableHeader';
+import BatchForm from '../components/BatchForm';
+import axios from "axios";
+
+@connect((store) => {
+  return {
+    csvData: "data"
+  };
+})
+export default class Dashboard extends React.Component{
+
+
+    constructor(){
+        super()
+
+    }
+
+    componentWillMount(){
+      this.state = {
+        csvData: [],
+        csvUploaded: false,
+        amount: null,
+        apiKey: null
+      }
+    }
+
+    handleFiles(files){
+      var reader = new FileReader()
+      reader.onload = function(e) {
+        this.setState({
+          csvData: CSVToArray(reader.result),
+          csvUploaded: true,
+          showSubmit: true
+        })
+        console.log(CSVToArray(reader.result))
+      }.bind(this)
+      reader.readAsText(files[0])
+
+    }
+
+    onAmountChange(e){
+      this.state.amount = e.target.value;
+    }
+
+    onApiChange(e){
+      this.state.apiKey = e.target.value;
+    }
+
+    onSubmit(){
+      console.log("Submitting...printing xml...")
+      var xmlString = generateXML(this.state.csvData);
+      var xml = StringToXML(xmlString)
+      var serializedXml = new XMLSerializer().serializeToString(xml);
+      console.log(serializedXml);
+      this.props.dispatch(postTransactions(serializedXml, this.state.apiKey));
+
+    }
+
+    render(){
+        const { location } = this.props;
+        const {csvData} = this.state;
+        const {csvUploaded} = this.state;
+        var headers = []
+        if(csvData){
+          headers = csvData.shift();
+        }
+        const DataRowComponents = csvData.map(csv => {
+          if(csv.length === 16){
+            return <DataRow key={csv[0]} props={csv} />
+          }
+        })
+
+        return(
+          <div>
+            <Nav location = {location} />
+            <div className="container jack-container">
+              <div className="jumbotron">
+                <p>Upload CSV</p>
+                <ReactFileReader handleFiles={this.handleFiles.bind(this)}>
+                  <button className='btn'>Upload</button>
+                </ReactFileReader>
+              </div>
+              <div className="jack-table">
+                <table className="table table-striped">
+                  <thead>
+                    <TableHeader props={headers} />
+                  </thead>
+                  <tbody>
+                    {DataRowComponents}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div className="container jack-container">
+              {csvUploaded ? <BatchForm onSubmit={this.onSubmit.bind(this)} onAmountChange={this.onAmountChange.bind(this)} onApiChange={this.onApiChange.bind(this)}/> : null}
+            </div>
+          </div>
+        );
+    }
+}
