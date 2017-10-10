@@ -78,7 +78,19 @@ export default class Dashboard extends React.Component{
             return <DataRow key={csv[0]} props={csv} />
           }
         })
-        console.log(this.props.transactions);
+        if(this.props.transactions !== null){
+          return (
+              <div>
+                <Nav location={location} />
+                <div className="jack-container">
+                  <div className="jumbotron">
+                    <h1>Response Code: {this.props.transactions.status}</h1>
+                    <h3>Message: {this.props.transactions.message}</h3>
+                  </div>
+                </div>
+              </div>
+          )
+        }
         return(
           <div>
             <Nav location = {location} />
