@@ -10,3 +10,13 @@ export function postTransactions(serializedXml, apiKey) {
     });
   }
 }
+
+export function findBatch(batchId, apiKey) {
+  return function(dispatch) {
+    axios.post("http://localhost:8080/api/findBatch", {apiKey: apiKey, batchId: batchId}).then(response => {
+      dispatch({type: "FIND_BATCH", payload: response.data});
+    }).catch(error => {
+      console.log(error);
+    });
+  }
+}

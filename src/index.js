@@ -16,7 +16,7 @@ const Root = () => {
       <BrowserRouter>
         <div>
           <Route exact path="/" component={Dashboard} />
-          <Route path="/transactionresult" component={TransactionResult} />
+          <Route path="/findBatch" component={TransactionResult} />
         </div>
       </BrowserRouter>
     </Provider>

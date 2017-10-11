@@ -13,7 +13,7 @@ import axios from "axios";
 
 @connect((store) => {
   return {
-    transactions: store.main.transactions,
+    transactions: store.main.response,
   };
 })
 export default class Dashboard extends React.Component{

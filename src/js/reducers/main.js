@@ -1,10 +1,14 @@
 export default function reducer(state = {
-  transactions: null,
+  response: null,
+  batchData: null
 }, action) {
 
   switch (action.type) {
     case "POST_TRANSACTIONS": {
-      return {...state, transactions: action.payload}
+      return {...state, response: action.payload}
+    }
+    case "FIND_BATCH": {
+      return {...state, batchData: action.payload}
     }
     default: {
       return state
