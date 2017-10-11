@@ -42,39 +42,14 @@ export default class TransactionResult extends React.Component{
         const {batchData} = this.props;
         const xml = StringToXML(batchData);
 
-        if(batchData){
-          const cardTransactions = xml.getElementsByTagName("card-transaction");
-          console.log(cardTransactions);
-          var cardTxnsArray = [];
-          for(var i = cardTransactions.length; i--; cardTxnsArray.unshift(cardTransactions[i]));
-          const BatchResultRows = cardTxnsArray.map((txn, index) => {
-            return <BatchResultRow key={index} props={txn} />
-          })
-          return (
-            <div className="jack-table">
-              <table className="table table-striped">
-                <thead>
-                  <tr>
-                    <td>Transaction Type</td>
-                    <td>Merchant Id</td>
-                    <td>Recurring Transaction</td>
-                    <td>Description</td>
-                    <td>Amount</td>
-                    <td>Currency</td>
-                    <td>Shopper Id</td>
-                    <td>Processing Status</td>
-                    <td>Error Code</td>
-                    <td>Error Name</td>
-                    <td>Error Description</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  {BatchResultRows}
-                </tbody>
-              </table>
-            </div>
-          )
-        }
+        const cardTransactions = xml.getElementsByTagName("card-transaction");
+        console.log(cardTransactions);
+        var cardTxnsArray = [];
+        for(var i = cardTransactions.length; i--; cardTxnsArray.unshift(cardTransactions[i]));
+        const BatchResultRows = cardTxnsArray.map((txn, index) => {
+          return <BatchResultRow key={index} props={txn} />
+        })
+
         return(
           <div>
             <Nav location={location} />
@@ -101,6 +76,28 @@ export default class TransactionResult extends React.Component{
                   <button className='btn' onClick={this.onSubmit.bind(this)}>Find Batch Transaction</button>
                 </div>
               </div>
+            </div>
+            <div className="jack-container">
+              <table className="table table-striped">
+                <thead>
+                  <tr>
+                    <td>Transaction Type</td>
+                    <td>Merchant Id</td>
+                    <td>Recurring Transaction</td>
+                    <td>Description</td>
+                    <td>Amount</td>
+                    <td>Currency</td>
+                    <td>Shopper Id</td>
+                    <td>Processing Status</td>
+                    <td>Error Code</td>
+                    <td>Error Name</td>
+                    <td>Error Description</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  {BatchResultRows}
+                </tbody>
+              </table>
             </div>
           </div>
         );
