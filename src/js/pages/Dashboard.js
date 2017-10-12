@@ -78,7 +78,10 @@ export default class Dashboard extends React.Component{
             return <DataRow key={csv[0]} props={csv} />
           }
         })
+
         if(this.props.transactions !== null){
+          const xml = StringToXML(this.props.transactions.body);
+          const processing_error_desc = xml.getElementsByTagName("processing-error-description")[0].childNodes[0].nodeValue;
           return (
               <div>
                 <Nav location={location} />
@@ -86,6 +89,7 @@ export default class Dashboard extends React.Component{
                   <div className="jumbotron">
                     <h1>Response Code: {this.props.transactions.status}</h1>
                     <h3>Message: {this.props.transactions.message}</h3>
+                    <h3>Description: {processing_error_desc}</h3>
                   </div>
                 </div>
               </div>
