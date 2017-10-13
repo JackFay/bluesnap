@@ -89,7 +89,7 @@ export function CSVToArray( strData, strDelimiter ){
 //  BlueSnap Shopper Id	Create or Update	Success
 
 //merchant-transaction-id? card-transaction?
-export function generateXML(array){
+export function generateXML(array, batchId){
   var cardTransactions = "";
   for(var i = 0; i < array.length; i++){
     var [sellerShopperId, shopperFirstName, shopperLastName, shopperEmail,
@@ -113,7 +113,7 @@ export function generateXML(array){
 
   var xml = '<?xml version="1.0" encoding="UTF-8"?> \
             <batch-transaction xmlns="http://ws.plimus.com"> \
-               <batch-id>unique_0130076552988</batch-id> \
+               <batch-id>' + batchId + '</batch-id> \
                <callback-url>http://localhost:8080/jsp/batch_callback.jsp</callback-url> \
                '+ cardTransactions + '\
             </batch-transaction>'
