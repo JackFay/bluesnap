@@ -109,7 +109,7 @@ export default class Dashboard extends React.Component{
                 <div className="form-group">
                   <label htmlFor="batchId" className="col-lg-2">Batch ID: </label>
                   <div className="col-lg-10">
-                    <input type="text" className="form-control" id="batchId" onChange={this.onBatchIdChange.bind(this)}/>
+                    <input type="text" disabled={this.state.csvUploaded ? true : false} className="form-control" id="batchId" onChange={this.onBatchIdChange.bind(this)}/>
                   </div>
                 </div>
                 <div className="form-group">
