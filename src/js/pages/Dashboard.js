@@ -81,7 +81,11 @@ export default class Dashboard extends React.Component{
 
         if(this.props.transactions !== null){
           const xml = StringToXML(this.props.transactions.body);
-          const processing_error_desc = xml.getElementsByTagName("processing-error-description")[0].childNodes[0].nodeValue;
+          console.log(xml);
+          let processing_error_desc = "";
+          if(xml.getElementsByTagName("processing-error-description")[0] != undefined){
+            processing_error_desc = xml.getElementsByTagName("processing-error-description")[0].childNodes[0].nodeValue;
+          }
           return (
               <div>
                 <Nav location={location} />
