@@ -24,13 +24,13 @@ export default class BatchForm extends React.Component {
                   <input type="number" className="form-control" id="amount" value="95.00" onChange={this.props.onAmountChange}/>
                 </div>
               </div>
-              <div className="form-group container">
-                <div>
-                  <button className='btn btn-default' onClick={this.props.onSubmit}>Submit Batch Transaction</button>
-                </div>
-              </div>
             </fieldset>
           </form>
+          <div className="form-group container">
+            <div>
+              <button className='btn btn-default' onClick={this.props.onSubmit}>Submit Batch Transaction</button>
+            </div>
+          </div>
         </div>
     )
   }
