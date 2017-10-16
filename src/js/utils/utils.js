@@ -92,12 +92,13 @@ export function CSVToArray( strData, strDelimiter ){
 export function generateXML(array, batchId){
   var cardTransactions = "";
   for(var i = 0; i < array.length; i++){
-    var [sellerShopperId, shopperFirstName, shopperLastName, shopperEmail,
-           shopperCountry, shopperState, billingFirstName, billingLastName,
-           billingCountry, billingState, billingCardNumber, expirationMonth, expirationYear,
-           shopperId, createOrUpdate, success] = array[i];
-    if(array[i].length === 16){
-     var transaction =  '<card-transaction> \
+    // var [sellerShopperId, shopperFirstName, shopperLastName, shopperEmail,
+    //        shopperCountry, shopperState, billingFirstName, billingLastName,
+    //        billingCountry, billingState, billingCardNumber, expirationMonth, expirationYear,
+    //        shopperId] = array[i];
+    var shopperId = array[i][13];
+    if(shopperId !== undefined ){
+      var transaction =  '<card-transaction> \
          <card-transaction-type>AUTH_CAPTURE</card-transaction-type> \
          <merchant-transaction-id>1094444</merchant-transaction-id>\
          <recurring-transaction>ECOMMERCE</recurring-transaction> \
@@ -106,7 +107,6 @@ export function generateXML(array, batchId){
          <currency>USD</currency> \
          <vaulted-shopper-id>'+ shopperId +'</vaulted-shopper-id> \
        </card-transaction>';
-
        cardTransactions = cardTransactions + transaction;
      }
   }

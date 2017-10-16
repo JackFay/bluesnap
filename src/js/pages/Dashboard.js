@@ -61,7 +61,7 @@ export default class Dashboard extends React.Component{
 
     onSubmit(){
       var xmlString = generateXML(this.state.csvData, this.state.batchId);
-      var xml = StringToXML(xmlString)
+      var xml = StringToXML(xmlString);
       var serializedXml = new XMLSerializer().serializeToString(xml);
       this.props.dispatch(postTransactions(serializedXml, this.state.apiKey, this.state.batchId));
     }
@@ -76,14 +76,12 @@ export default class Dashboard extends React.Component{
         }
         const DataRowComponents = csvData.map(csv => {
           if(csv.length > 1){
-            console.log("the key is: " + csv[0]);
             return <DataRow key={csv[0]} props={csv} />
           }
         })
 
         if(this.props.transactions !== null){
           const xml = StringToXML(this.props.transactions.body);
-          console.log(xml);
           let processing_error_desc = "";
           if(xml.getElementsByTagName("processing-error-description")[0] != undefined){
             processing_error_desc = xml.getElementsByTagName("processing-error-description")[0].childNodes[0].nodeValue;
