@@ -28,13 +28,13 @@ export default class Dashboard extends React.Component{
       this.state = {
         csvData: [],
         csvUploaded: false,
-        amount: null,
-        apiKey: null,
+        amount: "",
+        apiKey: "",
         batchId: "",
       }
     }
 
-    handleFiles(files){
+    handleFiles(e){
       var reader = new FileReader()
       reader.onload = function(e) {
         this.setState({
@@ -43,7 +43,7 @@ export default class Dashboard extends React.Component{
           showSubmit: true
         })
       }.bind(this)
-      reader.readAsText(files[0])
+      reader.readAsText(e.target.files[0])
 
     }
 
@@ -56,10 +56,14 @@ export default class Dashboard extends React.Component{
     }
 
     onBatchIdChange(e){
-      this.setState({...this.state, batchId:  e.target.value});
+      this.state.batchId = e.target.value;
     }
 
     onSubmit(){
+      if(this.state.batchId === "" || this.state.apiKey === ""){
+        alert("please fill out all the fields");
+        return;
+      }
       var xmlString = generateXML(this.state.csvData, this.state.batchId);
       var xml = StringToXML(xmlString);
       var serializedXml = new XMLSerializer().serializeToString(xml);
@@ -107,15 +111,13 @@ export default class Dashboard extends React.Component{
                 <div className="form-group">
                   <label htmlFor="batchId" className="col-lg-2">Batch ID: </label>
                   <div className="col-lg-10">
-                    <input type="text" disabled={this.state.csvUploaded ? true : false} className="form-control" id="batchId" onChange={this.onBatchIdChange.bind(this)}/>
+                    <input type="text" className="form-control" id="batchId" onChange={this.onBatchIdChange.bind(this)}/>
                   </div>
                 </div>
                 <div className="form-group">
                   <label htmlFor="uploadCsv" className="col-lg-2">Upload CSV: </label>
                   <div className="col-lg-10">
-                    <ReactFileReader id="uploadCsv" handleFiles={this.handleFiles.bind(this)}>
-                      <button disabled={this.state.batchId === "" ? true : false} className='btn btn-default'>Upload</button>
-                    </ReactFileReader>
+                    <input type="file" accept="csv/*" id="csvUploader" onChange={this.handleFiles.bind(this)} />
                   </div>
                 </div>
               </form>
