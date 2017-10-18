@@ -87,18 +87,17 @@ export function CSVToArray( strData, strDelimiter ){
 export function generateXML(csvRows, batchId){
   var cardTransactions = "";
   for(var i = 0; i < csvRows.length; i++){
-    const merchId = csvRows[i][0];
-    const card_transaction_type = csvRows[i][1];
-    const merchant_transaction_id = csvRows[i][2];
-    const soft_descriptor = csvRows[i][3];
-    const recurring_txn = csvRows[i][4];
-    const amount = csvRows[i][5];
-    const currency = csvRows[i][6];
-    const vaulted_shopper_id = csvRows[i][7];
-    const card_last_four_digits = csvRows[i][8];
-    const card_type = csvRows[i][9];
-
-    if(merchId !== undefined ){
+    var merchId = csvRows[i][0];
+    var card_transaction_type = csvRows[i][1];
+    var merchant_transaction_id = csvRows[i][2];
+    var soft_descriptor = csvRows[i][3];
+    var recurring_txn = csvRows[i][4];
+    var amount = csvRows[i][5];
+    var currency = csvRows[i][6];
+    var vaulted_shopper_id = csvRows[i][7];
+    var card_last_four_digits = csvRows[i][8];
+    var card_type = csvRows[i][9];
+    if(merchId !== ""){
       var credit_card = "";
       if(card_last_four_digits !== ""){
         var transaction =  '<card-transaction> \
