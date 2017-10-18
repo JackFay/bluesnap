@@ -80,33 +80,52 @@ export function CSVToArray( strData, strDelimiter ){
     // Return the parsed data.
     return( arrData );
 }
-//shopperInfo.sellerShopperId	shopperInfo.shopperContactInfo.firstName
-//	shopperInfo.shopperContactInfo.lastName	shopperInfo.shopperContactInfo.email
-//	shopperInfo.shopperContactInfo.country	shopperInfo.shopperContactInfo.state
-//  billingContactInfo.firstName	billingContactInfo.lastName
-//  billingContactInfo.country	billingContactInfo.state	creditCard.cardNumber
-// 	creditCard.expirationMonth	creditCard.expirationYear
-//  BlueSnap Shopper Id	Create or Update	Success
-
-//merchant-transaction-id? card-transaction?
-export function generateXML(array, batchId){
+/*
+* Converts the CSV into xml
+* Returns a STRING of xml
+*/
+export function generateXML(csvRows, batchId){
   var cardTransactions = "";
-  for(var i = 0; i < array.length; i++){
-    // var [sellerShopperId, shopperFirstName, shopperLastName, shopperEmail,
-    //        shopperCountry, shopperState, billingFirstName, billingLastName,
-    //        billingCountry, billingState, billingCardNumber, expirationMonth, expirationYear,
-    //        shopperId] = array[i];
-    var shopperId = array[i][13];
-    if(shopperId !== undefined ){
-      var transaction =  '<card-transaction> \
-         <card-transaction-type>AUTH_CAPTURE</card-transaction-type> \
-         <merchant-transaction-id>1094444</merchant-transaction-id>\
-         <recurring-transaction>ECOMMERCE</recurring-transaction> \
-         <soft-descriptor>DescTest txn'+i+'</soft-descriptor> \
-         <amount>95.00</amount> \
-         <currency>USD</currency> \
-         <vaulted-shopper-id>'+ shopperId +'</vaulted-shopper-id> \
-       </card-transaction>';
+  for(var i = 0; i < csvRows.length; i++){
+    const merchId = csvRows[i][0];
+    const card_transaction_type = csvRows[i][1];
+    const merchant_transaction_id = csvRows[i][2];
+    const soft_descriptor = csvRows[i][3];
+    const recurring_txn = csvRows[i][4];
+    const amount = csvRows[i][5];
+    const currency = csvRows[i][6];
+    const vaulted_shopper_id = csvRows[i][7];
+    const card_last_four_digits = csvRows[i][8];
+    const card_type = csvRows[i][9];
+
+    if(merchId !== undefined ){
+      var credit_card = "";
+      if(card_last_four_digits !== ""){
+        var transaction =  '<card-transaction> \
+           <card-transaction-type>' + card_transaction_type + '</card-transaction-type> \
+           <merchant-transaction-id>' + merchant_transaction_id + '</merchant-transaction-id>\
+           <recurring-transaction>' + recurring_txn + '</recurring-transaction> \
+           <soft-descriptor>' + soft_descriptor + '</soft-descriptor> \
+           <amount>' + amount + '</amount> \
+           <currency>' + currency + '</currency> \
+           <vaulted-shopper-id>'+ vaulted_shopper_id +'</vaulted-shopper-id> \
+           <credit-card>\
+             <card-last-four-digits>' + card_last_four_digits + '</card-last-four-digits>\
+             <card-type>' + card_type + '</card-type>\
+           </credit-card>\
+         </card-transaction>';
+      }else{
+        var transaction =  '<card-transaction> \
+           <card-transaction-type>' + card_transaction_type + '</card-transaction-type> \
+           <merchant-transaction-id>' + merchant_transaction_id + '</merchant-transaction-id>\
+           <recurring-transaction>' + recurring_txn + '</recurring-transaction> \
+           <soft-descriptor>' + soft_descriptor + '</soft-descriptor> \
+           <amount>' + amount + '</amount> \
+           <currency>' + currency + '</currency> \
+           <vaulted-shopper-id>'+ vaulted_shopper_id +'</vaulted-shopper-id> \
+         </card-transaction>';
+       }
+
        cardTransactions = cardTransactions + transaction;
      }
   }
