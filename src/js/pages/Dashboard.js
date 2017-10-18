@@ -17,8 +17,6 @@ import axios from "axios";
   };
 })
 export default class Dashboard extends React.Component{
-
-
     constructor(){
         super()
 
@@ -28,7 +26,6 @@ export default class Dashboard extends React.Component{
       this.state = {
         csvData: [],
         csvUploaded: false,
-        amount: "",
         apiKey: "",
         batchId: "",
       }
@@ -47,10 +44,6 @@ export default class Dashboard extends React.Component{
 
     }
 
-    onAmountChange(e){
-      this.state.amount = e.target.value;
-    }
-
     onApiChange(e){
       this.state.apiKey = e.target.value;
     }
@@ -66,6 +59,7 @@ export default class Dashboard extends React.Component{
       }
       var xmlString = generateXML(this.state.csvData, this.state.batchId);
       var xml = StringToXML(xmlString);
+      console.log(xml);
       var serializedXml = new XMLSerializer().serializeToString(xml);
       this.props.dispatch(postTransactions(serializedXml, this.state.apiKey, this.state.batchId));
     }
@@ -132,7 +126,7 @@ export default class Dashboard extends React.Component{
                 </table>
               </div>
               <div className="jack-form">
-                {csvUploaded ? <BatchForm onSubmit={this.onSubmit.bind(this)} onAmountChange={this.onAmountChange.bind(this)} onApiChange={this.onApiChange.bind(this)}/> : null}
+                {csvUploaded ? <BatchForm onSubmit={this.onSubmit.bind(this)} onApiChange={this.onApiChange.bind(this)}/> : null}
               </div>
             </div>
           </div>

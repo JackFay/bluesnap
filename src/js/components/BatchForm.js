@@ -18,12 +18,6 @@ export default class BatchForm extends React.Component {
                   <input type="text" className="form-control" id="apiKey" onChange={this.props.onApiChange}/>
                 </div>
               </div>
-              <div className="form-group">
-                <label htmlFor="amount" className="col-lg-2 control-label">Charge Amount: $</label>
-                <div className="col-lg-10">
-                  <input type="number" className="form-control" id="amount" value="95.00" onChange={this.props.onAmountChange}/>
-                </div>
-              </div>
             </fieldset>
           </form>
           <div className="form-group container">
