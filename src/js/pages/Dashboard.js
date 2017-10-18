@@ -17,8 +17,6 @@ import axios from "axios";
   };
 })
 export default class Dashboard extends React.Component{
-
-
     constructor(){
         super()
 
@@ -28,7 +26,6 @@ export default class Dashboard extends React.Component{
       this.state = {
         csvData: [],
         csvUploaded: false,
-        amount: "",
         apiKey: "",
         batchId: "",
       }
@@ -45,10 +42,6 @@ export default class Dashboard extends React.Component{
       }.bind(this)
       reader.readAsText(e.target.files[0])
 
-    }
-
-    onAmountChange(e){
-      this.state.amount = e.target.value;
     }
 
     onApiChange(e){
@@ -132,7 +125,7 @@ export default class Dashboard extends React.Component{
                 </table>
               </div>
               <div className="jack-form">
-                {csvUploaded ? <BatchForm onSubmit={this.onSubmit.bind(this)} onAmountChange={this.onAmountChange.bind(this)} onApiChange={this.onApiChange.bind(this)}/> : null}
+                {csvUploaded ? <BatchForm onSubmit={this.onSubmit.bind(this)} onApiChange={this.onApiChange.bind(this)}/> : null}
               </div>
             </div>
           </div>
