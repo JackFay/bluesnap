@@ -28,9 +28,14 @@ export default class BatchResultRow extends React.Component {
       const vaulted_shopper_id = xml.getElementsByTagName("vaulted-shopper-id")[0].childNodes[0].nodeValue;
       const processing_info = xml.getElementsByTagName("processing-info")[0];
       const processing_status = processing_info.children[0].childNodes[0].nodeValue;
-      const processing_error = processing_info.children[1].children[0].children[0].childNodes[0].nodeValue;
-      const processing_error_name = processing_info.children[1].children[0].children[1].childNodes[0].nodeValue;
-      const processing_error_desc = processing_info.children[1].children[0].children[2].childNodes[0].nodeValue;
+      var processing_error = "";
+      var processing_error_name = "";
+      var processing_error_desc = "";
+      if(processing_status !== "SUCCESS"){
+        processing_error = processing_info.children[1].children[0].children[0].childNodes[0].nodeValue;
+        processing_error_name = processing_info.children[1].children[0].children[1].childNodes[0].nodeValue;
+        processing_error_desc = processing_info.children[1].children[0].children[2].childNodes[0].nodeValue;
+      }
       return(
         <tr>
           <td>{txn_type}</td>
@@ -41,9 +46,9 @@ export default class BatchResultRow extends React.Component {
           <td>{currency}</td>
           <td>{vaulted_shopper_id}</td>
           <td>{processing_status}</td>
-          <td>{processing_error}</td>
-          <td>{processing_error_name}</td>
-          <td>{processing_error_desc}</td>
+          <td>{processing_status !== "SUCCESS" ? processing_error : "N/A"}</td>
+          <td>{processing_status !== "SUCCESS" ? processing_error_name : "N/A"}</td>
+          <td>{processing_status !== "SUCCESS" ? processing_error_desc : "N/A"}</td>
         </tr>
       );
     }

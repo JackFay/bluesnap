@@ -12,6 +12,7 @@ import axios from "axios";
 @connect((store) => {
   return {
     batchData: store.main.batchData,
+    loading: store.main.loading,
   };
 })
 export default class TransactionResult extends React.Component{
@@ -73,7 +74,7 @@ export default class TransactionResult extends React.Component{
               </form>
               <div className="form-group">
                 <div className="col-lg-10 col-lg-offset-2">
-                  <button className='btn' onClick={this.onSubmit.bind(this)}>Find Batch Transaction</button>
+                  <button className='btn btn-default' disabled={this.props.loading} onClick={this.onSubmit.bind(this)}>{this.props.loading ? <i className="fa fa-spinner fa-spin" aria-hidden="true"></i> : "Find Batch Transaction"}</button>
                 </div>
               </div>
             </div>
