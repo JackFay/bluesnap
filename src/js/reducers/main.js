@@ -12,7 +12,7 @@ export default function reducer(state = {
       return {...state, response: action.payload, loading: false}
     }
     case "FIND_BATCH": {
-      return {...state, batchData: action.payload}
+      return {...state, batchData: action.payload, loading: false}
     }
     default: {
       return state
