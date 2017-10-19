@@ -14,6 +14,7 @@ import axios from "axios";
 @connect((store) => {
   return {
     transactions: store.main.response,
+    loading: store.main.loading,
   };
 })
 export default class Dashboard extends React.Component{
@@ -59,7 +60,6 @@ export default class Dashboard extends React.Component{
       }
       var xmlString = generateXML(this.state.csvData, this.state.batchId);
       var xml = StringToXML(xmlString);
-      console.log(xml);
       var serializedXml = new XMLSerializer().serializeToString(xml);
       this.props.dispatch(postTransactions(serializedXml, this.state.apiKey, this.state.batchId));
     }
@@ -68,6 +68,8 @@ export default class Dashboard extends React.Component{
         const { location } = this.props;
         const {csvData} = this.state;
         const {csvUploaded} = this.state;
+        const {loading} = this.props;
+        console.log("Loading = " + this.props.loading);
         var headers = []
         if(csvData){
           headers = csvData.shift();
@@ -126,7 +128,7 @@ export default class Dashboard extends React.Component{
                 </table>
               </div>
               <div className="jack-form">
-                {csvUploaded ? <BatchForm onSubmit={this.onSubmit.bind(this)} onApiChange={this.onApiChange.bind(this)}/> : null}
+                {csvUploaded ? <BatchForm onSubmit={this.onSubmit.bind(this)} onApiChange={this.onApiChange.bind(this)} loading={loading}/> : null}
               </div>
             </div>
           </div>

@@ -22,7 +22,7 @@ export default class BatchForm extends React.Component {
           </form>
           <div className="form-group container">
             <div>
-              <button className='btn btn-default' onClick={this.props.onSubmit}>Submit Batch Transaction</button>
+              <button disabled={this.props.loading} className='btn btn-default' onClick={this.props.onSubmit}>{this.props.loading ? <i className="fa fa-spinner fa-spin" aria-hidden="true"></i> : "Submit Batch Transaction"}</button>
             </div>
           </div>
         </div>
