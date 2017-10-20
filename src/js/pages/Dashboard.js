@@ -6,6 +6,7 @@ import {CSVToArray} from '../utils/utils'
 import {generateXML} from '../utils/utils';
 import {StringToXML} from '../utils/utils';
 import {postTransactions} from '../actions/actions';
+import {postBatchMetaData} from '../actions/actions';
 import DataRow from '../components/DataRow';
 import TableHeader from '../components/TableHeader';
 import BatchForm from '../components/BatchForm';
@@ -29,6 +30,7 @@ export default class Dashboard extends React.Component{
         csvUploaded: false,
         apiKey: "",
         batchId: "",
+        csvName: "",
       }
     }
 
@@ -38,11 +40,12 @@ export default class Dashboard extends React.Component{
         this.setState({
           csvData: CSVToArray(reader.result),
           csvUploaded: true,
-          showSubmit: true
+          showSubmit: true,
+          csvName: reader.fileName,
         })
-      }.bind(this)
-      reader.readAsText(e.target.files[0])
-
+      }.bind(this);
+      reader.fileName = e.target.files[0].name;
+      reader.readAsText(e.target.files[0]);
     }
 
     onApiChange(e){
@@ -64,12 +67,20 @@ export default class Dashboard extends React.Component{
       this.props.dispatch(postTransactions(serializedXml, this.state.apiKey, this.state.batchId));
     }
 
+    postBatchMetaData(error_body){
+      const batchId = this.state.batchId;
+      const csv = this.state.csvName;
+      const res_code = this.props.transactions.status;
+      const res_message = this.props.transactions.message;
+      const res_body = error_body
+      this.props.dispatch(postBatchMetaData(batchId, csv, res_code, res_message, res_body));
+    }
+
     render(){
         const { location } = this.props;
         const {csvData} = this.state;
         const {csvUploaded} = this.state;
         const {loading} = this.props;
-        console.log("Loading = " + this.props.loading);
         var headers = []
         if(csvData){
           headers = csvData.shift();
@@ -86,6 +97,7 @@ export default class Dashboard extends React.Component{
           if(xml.getElementsByTagName("processing-error-description")[0] != undefined){
             processing_error_desc = xml.getElementsByTagName("processing-error-description")[0].childNodes[0].nodeValue;
           }
+          this.postBatchMetaData(processing_error_desc);
           return (
               <div>
                 <Nav location={location} />
