@@ -64,7 +64,7 @@ export default class Dashboard extends React.Component{
       var xmlString = generateXML(this.state.csvData, this.state.batchId);
       var xml = StringToXML(xmlString);
       var serializedXml = new XMLSerializer().serializeToString(xml);
-      this.props.dispatch(postTransactions(serializedXml, this.state.apiKey, this.state.batchId));
+      this.props.dispatch(postTransactions(serializedXml, this.state.apiKey, this.state.batchId.toUpperCase()));
     }
 
     postBatchMetaData(error_body){
