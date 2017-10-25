@@ -27,7 +27,7 @@ export default class TransactionResult extends React.Component{
     }
 
     onBatchIdChange(e){
-      this.state.batchId = e.target.value;
+      this.state.batchId = e.target.value.toUpperCase();
     }
 
     onApiChange(e){
@@ -35,7 +35,7 @@ export default class TransactionResult extends React.Component{
     }
 
     onSubmit(){
-      this.props.dispatch(findBatch(this.state.batchId.toUpperCase(), this.state.apiKey));
+      this.props.dispatch(findBatch(this.state.batchId, this.state.apiKey));
     }
 
     render(){

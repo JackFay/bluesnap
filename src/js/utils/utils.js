@@ -132,7 +132,7 @@ export function generateXML(csvRows, batchId){
   var xml = '<?xml version="1.0" encoding="UTF-8"?> \
             <batch-transaction xmlns="http://ws.plimus.com"> \
                <batch-id>' + batchId + '</batch-id> \
-               <callback-url>http://localhost:8080/jsp/batch_callback.jsp</callback-url> \
+               <callback-url>http://dev.jackfay.us/api/batchTransactionCallback</callback-url> \
                '+ cardTransactions + '\
             </batch-transaction>'
 
