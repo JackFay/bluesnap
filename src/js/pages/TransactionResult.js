@@ -13,6 +13,7 @@ import axios from "axios";
   return {
     batchData: store.main.batchData,
     loading: store.main.loading,
+    response_message: store.main.response_message
   };
 })
 export default class TransactionResult extends React.Component{
@@ -42,9 +43,12 @@ export default class TransactionResult extends React.Component{
         const { location } = this.props;
         const {batchData} = this.props;
         const xml = StringToXML(batchData);
-
         const cardTransactions = xml.getElementsByTagName("card-transaction");
-        console.log(cardTransactions);
+        const errors = xml.getElementsByTagName("processing-errors");
+        const {response_message} = this.props;
+        var error = false;
+        if(errors[0])
+          error = errors[0].children[0].childNodes[2].childNodes["0"].nodeValue;
         var cardTxnsArray = [];
         for(var i = cardTransactions.length; i--; cardTxnsArray.unshift(cardTransactions[i]));
         const BatchResultRows = cardTxnsArray.map((txn, index) => {
@@ -74,6 +78,10 @@ export default class TransactionResult extends React.Component{
               </form>
               <div className="form-group">
                 <div className="col-lg-10 col-lg-offset-2">
+                  <div className="error">
+                    {response_message !== null ? response_message : null}
+                    {error !== false ? error : null}
+                  </div>
                   <button className='btn btn-default' disabled={this.props.loading} onClick={this.onSubmit.bind(this)}>{this.props.loading ? <i className="fa fa-spinner fa-spin" aria-hidden="true"></i> : "Find Batch Transaction"}</button>
                 </div>
               </div>

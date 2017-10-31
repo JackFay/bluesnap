@@ -1,3 +1,5 @@
+import config from '../../config.json';
+
 export function CSVToArray( strData, strDelimiter ){
     // Check to see if the delimiter is defined. If not,
     // then default to comma.
@@ -132,7 +134,7 @@ export function generateXML(csvRows, batchId){
   var xml = '<?xml version="1.0" encoding="UTF-8"?> \
             <batch-transaction xmlns="http://ws.plimus.com"> \
                <batch-id>' + batchId + '</batch-id> \
-               <callback-url>http://dev.jackfay.us/api/batchTransactionCallback</callback-url> \
+               <callback-url>' + config.hostname + '/api/batchTransactionCallback' + '</callback-url> \
                '+ cardTransactions + '\
             </batch-transaction>'
 

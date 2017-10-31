@@ -101,7 +101,7 @@ export default class Dashboard extends React.Component{
           return (
               <div>
                 <Nav location={location} />
-                <div className="jack-container">
+                <div className="container">
                   <div className="jumbotron">
                     <h1>Response Code: {this.props.transactions.status}</h1>
                     <h3>Message: {this.props.transactions.message}</h3>
