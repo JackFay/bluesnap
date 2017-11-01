@@ -14,10 +14,6 @@ export default class BatchResultRow extends React.Component {
         <tr></tr>
       )
     }else{
-      // const TdComponents = this.props.props.map(data => {
-      //   this.state.id+=1;
-      //   return <td key={this.state.id}>{data}</td>
-      // })
       const xml = this.props.props;
       const txn_type = xml.getElementsByTagName("card-transaction-type")[0].childNodes[0].nodeValue;
       const merchant_txn_id = xml.getElementsByTagName("merchant-transaction-id")[0].childNodes[0].nodeValue;
@@ -31,7 +27,7 @@ export default class BatchResultRow extends React.Component {
       var processing_error = "";
       var processing_error_name = "";
       var processing_error_desc = "";
-      if(processing_status !== "SUCCESS"){
+      if(processing_status === "FAIL"){
         processing_error = processing_info.children[1].children[0].children[0].childNodes[0].nodeValue;
         processing_error_name = processing_info.children[1].children[0].children[1].childNodes[0].nodeValue;
         processing_error_desc = processing_info.children[1].children[0].children[2].childNodes[0].nodeValue;

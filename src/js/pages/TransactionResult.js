@@ -23,7 +23,6 @@ export default class TransactionResult extends React.Component{
         super()
         this.state = {
           batchId: 0,
-          apiKey: null,
         }
     }
 
@@ -31,12 +30,8 @@ export default class TransactionResult extends React.Component{
       this.state.batchId = e.target.value.toUpperCase();
     }
 
-    onApiChange(e){
-      this.state.apiKey = e.target.value;
-    }
-
     onSubmit(){
-      this.props.dispatch(findBatch(this.state.batchId, this.state.apiKey));
+      this.props.dispatch(findBatch(this.state.batchId));
     }
 
     render(){
@@ -47,10 +42,6 @@ export default class TransactionResult extends React.Component{
         const errors = xml.getElementsByTagName("processing-errors");
         const {response_message} = this.props;
         var error = false;
-        // if(errors[0]){
-        //   console.log(errors);
-        //   error = errors[0].children[0].childNodes[2].childNodes["0"].nodeValue;
-        // }
         var cardTxnsArray = [];
         for(var i = cardTransactions.length; i--; cardTxnsArray.unshift(cardTransactions[i]));
         const BatchResultRows = cardTxnsArray.map((txn, index) => {
@@ -68,12 +59,6 @@ export default class TransactionResult extends React.Component{
                     <label htmlFor="batchId" className="col-lg-2 control-label">Batch ID: </label>
                     <div className="col-lg-10">
                       <input type="text" className="form-control" id="batchId" onChange={this.onBatchIdChange.bind(this)}/>
-                    </div>
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="apiKey" className="col-lg-2 control-label">API Key: </label>
-                    <div className="col-lg-10">
-                      <input type="text" className="form-control" id="apiKey" onChange={this.onApiChange.bind(this)}/>
                     </div>
                   </div>
                 </fieldset>

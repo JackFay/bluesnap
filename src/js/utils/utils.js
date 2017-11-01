@@ -134,7 +134,7 @@ export function generateXML(csvRows, batchId){
   var xml = '<?xml version="1.0" encoding="UTF-8"?> \
             <batch-transaction xmlns="http://ws.plimus.com"> \
                <batch-id>' + batchId + '</batch-id> \
-               <callback-url>' + config.hostname + '/api/batchTransactionCallback' + '</callback-url> \
+               <callback-url>' + config.callbackUrl + '/api/batchTransactionCallback' + '</callback-url> \
                '+ cardTransactions + '\
             </batch-transaction>'
 

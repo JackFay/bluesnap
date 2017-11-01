@@ -28,7 +28,6 @@ export default class Dashboard extends React.Component{
       this.state = {
         csvData: [],
         csvUploaded: false,
-        apiKey: "",
         batchId: "",
         csvName: "",
       }
@@ -48,23 +47,19 @@ export default class Dashboard extends React.Component{
       reader.readAsText(e.target.files[0]);
     }
 
-    onApiChange(e){
-      this.state.apiKey = e.target.value;
-    }
-
     onBatchIdChange(e){
       this.state.batchId = e.target.value.toUpperCase();
     }
 
     onSubmit(){
-      if(this.state.batchId === "" || this.state.apiKey === ""){
+      if(this.state.batchId === ""){
         alert("please fill out all the fields");
         return;
       }
       var xmlString = generateXML(this.state.csvData, this.state.batchId);
       var xml = StringToXML(xmlString);
       var serializedXml = new XMLSerializer().serializeToString(xml);
-      this.props.dispatch(postTransactions(serializedXml, this.state.apiKey));
+      this.props.dispatch(postTransactions(serializedXml));
     }
 
     postBatchMetaData(error_body){
@@ -140,7 +135,7 @@ export default class Dashboard extends React.Component{
                 </table>
               </div>
               <div className="jack-form">
-                {csvUploaded ? <BatchForm onSubmit={this.onSubmit.bind(this)} onApiChange={this.onApiChange.bind(this)} loading={loading}/> : null}
+                {csvUploaded ? <BatchForm onSubmit={this.onSubmit.bind(this)} loading={loading}/> : null}
               </div>
             </div>
           </div>

@@ -1,10 +1,10 @@
 import axios from "axios";
 import config from "../../config";
 
-export function postTransactions(serializedXml, apiKey) {
+export function postTransactions(serializedXml) {
   return function(dispatch) {
     dispatch({type: "MAKING_REQUEST", payload: true});
-    axios.post(config.hostname + "/api", {api: apiKey, xml: serializedXml}).then(response => {
+    axios.post(config.hostname + "/api", {xml: serializedXml}).then(response => {
       dispatch({type: "POST_TRANSACTIONS", payload: response.data});
     }).catch(error => {
       console.log(error);
@@ -12,10 +12,10 @@ export function postTransactions(serializedXml, apiKey) {
   }
 }
 
-export function findBatch(batchId, apiKey) {
+export function findBatch(batchId) {
   return function(dispatch) {
     dispatch({type: "MAKING_REQUEST", payload: true});
-    axios.post(config.hostname + "/api/findBatch", {apiKey: apiKey, batchId: batchId}).then(response => {
+    axios.post(config.hostname + "/api/findBatch", {batchId: batchId}).then(response => {
       dispatch({type: "FIND_BATCH", payload: response.data});
     }).catch(error => {
       console.log(error);
